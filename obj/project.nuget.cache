@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Okym/IlJTxA=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mert_akkad\\TrainBookingApi\\TrainBookingApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mert_akkad\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "C:\\Users\\mert_akkad\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

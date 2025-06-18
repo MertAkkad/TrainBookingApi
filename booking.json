@@ -1,0 +1,14 @@
+{
+    "IsSame": true,
+    "Passengers": [
+        {
+            "Name": "Alice"
+        },
+        {
+            "Name": "Bob"
+        },
+        {
+            "Name": "Charlie"
+        }
+    ]
+}

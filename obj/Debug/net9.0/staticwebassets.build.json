@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "aDRz5ioPqhyWcX+zF8Gkao779yLgQrdcgH6zTRS2cL4=",
+  "Source": "TrainBookingApi",
+  "BasePath": "_content/TrainBookingApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

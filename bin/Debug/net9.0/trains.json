@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Train A",
+    "Capacity": 100,
+    "CurrentOccupancy": 59
+  },
+  {
+    "Id": 2,
+    "Name": "Train B",
+    "Capacity": 100,
+    "CurrentOccupancy": 66
+  },
+  {
+    "Id": 3,
+    "Name": "Train C",
+    "Capacity": 120,
+    "CurrentOccupancy": 90
+  }
+]
