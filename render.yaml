@@ -5,5 +5,5 @@ services:
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-    healthCheckPath: /api/booking
+    healthCheckPath: /api/booking/health
     plan: free 

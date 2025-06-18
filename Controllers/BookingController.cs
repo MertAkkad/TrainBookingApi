@@ -19,4 +19,9 @@ public class BookingController : ControllerBase
         System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(_bookingService.GetTrains(), new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
         return Ok(result);
     }
+    [HttpGet("health")]
+    public IActionResult HealthCheck()
+    {
+        return Ok("Healthy");
+    }
 }
