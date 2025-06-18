@@ -2,14 +2,14 @@
   {
     "Id": 1,
     "Name": "Train A",
-    "Capacity": 100,
-    "CurrentOccupancy": 70
+    "Capacity": 150,
+    "CurrentOccupancy": 60
   },
   {
     "Id": 2,
     "Name": "Train B",
     "Capacity": 100,
-    "CurrentOccupancy": 70
+    "CurrentOccupancy": 60
   },
   {
     "Id": 3,
