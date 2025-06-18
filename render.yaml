@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: train-booking-api
+    env: dotnet
+    buildCommand: dotnet build
+    startCommand: dotnet run
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+    healthCheckPath: /api/booking
+    plan: free 
