@@ -1,7 +1,7 @@
 services:
   - type: web
     name: train-booking-api
-    env: dotnet
+    runtime: dotnet-core
     buildCommand: dotnet build
     startCommand: dotnet run
     envVars:
