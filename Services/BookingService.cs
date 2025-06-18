@@ -5,15 +5,19 @@ using System.Linq;
 public class BookingService
 {
     private List<Train> _trains;
+    private int _totalPassengers;
+
     public BookingService(List<Train> trains)
     {
         _trains = trains;
+        _totalPassengers = 0;
     }
     // Method to assign trains to passengers
     public BookingRequest AssignTrains(BookingRequest request)
     {
+        _totalPassengers = request.Passengers.Count;
         Console.WriteLine($"\nProcessing booking request - IsSame: {request.IsSame}");
-        Console.WriteLine($"Number of passengers: {request.Passengers.Count}");
+        Console.WriteLine($"Number of passengers: {_totalPassengers}");
         Console.WriteLine("\nCurrent train status:");
         foreach (var train in _trains)
         {
@@ -26,7 +30,7 @@ public class BookingService
             // Find a train with enough capacity and less than 70% full
             var availableTrains = _trains.FindAll(t =>
             {                                    // in case the train can only take one or two passengers before it is 70% full
-                var occupancyRatio = (double)(t.CurrentOccupancy + 2) / t.Capacity;
+                var occupancyRatio = (double)(t.CurrentOccupancy + (_totalPassengers - 1)) / t.Capacity;
                 var hasRoom = (t.Capacity - t.CurrentOccupancy) >= request.Passengers.Count;
                 Console.WriteLine($"Checking {t.Name}: Occupancy ratio: {occupancyRatio:P2}, Has enough space: {hasRoom}");
                 return occupancyRatio < 0.7 && hasRoom;//conditional return statement to return  the train has enough space and is less than 70% full

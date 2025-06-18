@@ -15,9 +15,17 @@ public class BookingController : ControllerBase
     [HttpPost]
     public IActionResult Book([FromBody] BookingRequest request)
     {
-        var result = _bookingService.AssignTrains(request);
-        System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(_bookingService.GetTrains(), new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
-        return Ok(result);
+        var bookingResult = _bookingService.AssignTrains(request);
+        var trains = _bookingService.GetTrains();
+        System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(trains, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
+        var response = new BookingResponse
+        {
+            Booking = bookingResult,
+            Trains = trains
+        };
+
+        return Ok(response);
     }
     [HttpGet("health")]
     public IActionResult HealthCheck()

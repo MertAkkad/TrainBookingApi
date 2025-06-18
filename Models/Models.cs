@@ -1,4 +1,3 @@
-
 // Models to hold train data
 public class Train
 {
@@ -31,4 +30,11 @@ public class BookingRequest
     public bool IsSame { get; set; }
     // List of passengers
     public List<Passenger> Passengers { get; set; }
+}
+
+// Model to hold booking response with train data
+public class BookingResponse
+{
+    public BookingRequest Booking { get; set; }
+    public List<Train> Trains { get; set; }
 }
