@@ -1,9 +1,7 @@
 services:
   - type: web
     name: train-booking-api
-    runtime: dotnet
-    buildCommand: dotnet build
-    startCommand: dotnet run
+    env: docker
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
