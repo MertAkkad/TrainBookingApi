@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 // Models to hold train data
 public class Train
 {
@@ -12,29 +14,25 @@ public class Train
     }
 }
 // Model to hold single passenger data
-public class Passenger
-{
-    public string Name { get; set; }
-    // The train id that the passenger is assigned to
-    public int? TrainId { get; set; }
-    // Passenger information as a string    
-    public override string ToString()
-    {
-        return $"{Name} (Train: {TrainId?.ToString() ?? "Not Assigned"})";
-    }
-}
+
 // Model to hold booking record
 public class BookingRequest
 {
     // 1 if all passengers are assigned to the same train, 0 if they are assigned to different trains
+    [JsonPropertyName("IsSame")]
     public bool IsSame { get; set; }
     // List of passengers
-    public List<Passenger> Passengers { get; set; }
+    [JsonPropertyName("PassengerCount")]
+    public int PassengerCount { get; set; }
+    [JsonPropertyName("trains")]
+    public List<Train>? Trains { get; set; }
 }
 
 // Model to hold booking response with train data
 public class BookingResponse
 {
-    public BookingRequest Booking { get; set; }
-    public List<Train> Trains { get; set; }
+    [JsonPropertyName("isBooked")]
+    public bool isBooked { get; set; }
+    [JsonPropertyName("Trains")]
+    public List<Train>? Trains { get; set; }
 }

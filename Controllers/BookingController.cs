@@ -3,33 +3,45 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/[controller]")]
 public class BookingController : ControllerBase
 {
-    private readonly BookingService _bookingService;
+    private BookingService _bookingService;
 
     public BookingController()
     {
-        // Load trains from file (or hardcoded for now)
-        var trains = System.Text.Json.JsonSerializer.Deserialize<List<Train>>(System.IO.File.ReadAllText("trains.json"));
-        _bookingService = new BookingService(trains);
+
+        _bookingService = new BookingService();
     }
 
     [HttpPost]
     public IActionResult Book([FromBody] BookingRequest request)
     {
-        var bookingResult = _bookingService.AssignTrains(request);
-        var trains = _bookingService.GetTrains();
-        System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(trains, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+        var result = _bookingService.AssignTrains(request);
 
-        var response = new BookingResponse
-        {
-            Booking = bookingResult,
-            Trains = trains
-        };
-
-        return Ok(response);
+        // Write to file
+        System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(result, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+        return Ok(result);
     }
+
     [HttpGet("health")]
     public IActionResult HealthCheck()
     {
         return Ok("Healthy");
+    }
+
+    [HttpPost("reset")]
+    public IActionResult ResetTrains()
+    {
+        var originalTrains = new List<Train>
+        {
+            new Train { Id = 1, Name = "Train A", Capacity = 150, CurrentOccupancy = 60 },
+            new Train { Id = 2, Name = "Train B", Capacity = 100, CurrentOccupancy = 60 },
+            new Train { Id = 3, Name = "Train C", Capacity = 120, CurrentOccupancy = 90 }
+        };
+
+        System.IO.File.WriteAllText("trains.json", System.Text.Json.JsonSerializer.Serialize(originalTrains, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
+        // Reload the booking service with the reset data
+        _bookingService = new BookingService();
+
+        return Ok(new { message = "Trains reset to original state", trains = originalTrains });
     }
 }

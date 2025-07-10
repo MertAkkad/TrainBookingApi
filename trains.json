@@ -1,20 +1,65 @@
-[
-  {
-    "Id": 1,
-    "Name": "Train A",
-    "Capacity": 150,
-    "CurrentOccupancy": 60
-  },
-  {
-    "Id": 2,
-    "Name": "Train B",
-    "Capacity": 100,
-    "CurrentOccupancy": 60
-  },
-  {
-    "Id": 3,
-    "Name": "Train C",
-    "Capacity": 120,
-    "CurrentOccupancy": 90
-  }
-]
+{
+  "isBooked": false,
+  "Trains": [
+    {
+      "Id": 1,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 3,
+      "Name": "Train B",
+      "Capacity": 100,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 2,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 62
+    },
+    {
+      "Id": 1,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 3,
+      "Name": "Train B",
+      "Capacity": 100,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 3,
+      "Name": "Train B",
+      "Capacity": 100,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 1,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 2,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 62
+    },
+    {
+      "Id": 1,
+      "Name": "Train A",
+      "Capacity": 150,
+      "CurrentOccupancy": 64
+    },
+    {
+      "Id": 3,
+      "Name": "Train B",
+      "Capacity": 100,
+      "CurrentOccupancy": 64
+    }
+  ]
+}

@@ -33,3 +33,4 @@ C:\Users\mert_akkad\TrainBookingApi\obj\Debug\net9.0\refint\TrainBookingApi.dll
 C:\Users\mert_akkad\TrainBookingApi\obj\Debug\net9.0\TrainBookingApi.pdb
 C:\Users\mert_akkad\TrainBookingApi\obj\Debug\net9.0\TrainBookingApi.genruntimeconfig.cache
 C:\Users\mert_akkad\TrainBookingApi\obj\Debug\net9.0\ref\TrainBookingApi.dll
+C:\Users\mert_akkad\TrainBookingApi\obj\Debug\net9.0\TrainBookingApi.sourcelink.json

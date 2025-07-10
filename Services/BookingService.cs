@@ -1,21 +1,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 
 public class BookingService
 {
     private List<Train> _trains;
     private int _totalPassengers;
 
-    public BookingService(List<Train> trains)
-    {
-        _trains = trains;
-        _totalPassengers = 0;
-    }
+
     // Method to assign trains to passengers
-    public BookingRequest AssignTrains(BookingRequest request)
+    public BookingResponse AssignTrains(BookingRequest request)
     {
-        _totalPassengers = request.Passengers.Count;
+        BookingResponse response = new BookingResponse();
+        response.Trains = new List<Train>();
+
+        // Check if trains are provided
+        if (request.Trains == null || request.Trains.Count == 0)
+        {
+            Console.WriteLine("No trains provided in the request.");
+            response.isBooked = false;
+            return response;
+        }
+
+        var _trains = request.Trains;
+        _totalPassengers = request.PassengerCount;
         Console.WriteLine($"\nProcessing booking request - IsSame: {request.IsSame}");
         Console.WriteLine($"Number of passengers: {_totalPassengers}");
         Console.WriteLine("\nCurrent train status:");
@@ -31,12 +40,12 @@ public class BookingService
             var availableTrains = _trains.FindAll(t =>
             {                                    // in case the train can only take one or two passengers before it is 70% full
                 var occupancyRatio = (double)(t.CurrentOccupancy + (_totalPassengers - 1)) / t.Capacity;
-                var hasRoom = (t.Capacity - t.CurrentOccupancy) >= request.Passengers.Count;
+                var hasRoom = (t.Capacity - t.CurrentOccupancy) >= request.PassengerCount;
                 Console.WriteLine($"Checking {t.Name}: Occupancy ratio: {occupancyRatio:P2}, Has enough space: {hasRoom}");
                 return occupancyRatio < 0.7 && hasRoom;//conditional return statement to return  the train has enough space and is less than 70% full
             });
             // Final check if an available train is returned before assigning passengers to it
-            if (availableTrains != null)
+            if (availableTrains != null && availableTrains.Count > 0)
             {   // Display the list of available trains
                 Console.WriteLine("\nAvailable trains:");
                 foreach (var train in availableTrains)
@@ -46,34 +55,47 @@ public class BookingService
                 }
                 // Get and display the train with the largest occupancy ratio
                 var selectedTrain = GetTrainWithLargestOccupancyRatio(availableTrains);
-                Console.WriteLine($"\nSelected train with highest occupancy: {selectedTrain.Name}");
-
-                // Assign passengers to a selected train
-                foreach (var p in request.Passengers)
+                if (selectedTrain != null)
                 {
-
-                    p.TrainId = selectedTrain.Id;    // Assigning the selected train id to the passenger
-
-
-                    Console.WriteLine($"Assigned {p.Name} to {selectedTrain.Name}");
+                    Console.WriteLine($"\nSelected train with highest occupancy: {selectedTrain.Name}");
+                    selectedTrain.CurrentOccupancy += request.PassengerCount;
+                    response.Trains.Add(selectedTrain);
+                    response.isBooked = true;
+                    Console.WriteLine($"Updated occupancy for {selectedTrain.Name}: {selectedTrain.CurrentOccupancy}/{selectedTrain.Capacity}");
                 }
+                else
+                {
+                    response.isBooked = false;
+                    Console.WriteLine("No suitable train found.");
+                }
+                /*
+                                // Assign passengers to a selected train
+                                foreach (var p in request.Passengers)
+                                {
+
+                                    p.TrainId = selectedTrain.Id;    // Assigning the selected train id to the passenger
+
+
+                                    Console.WriteLine($"Assigned {p.Name} to {selectedTrain.Name}");
+                                }*/
                 // Update the current occupancy of the selected train
-                selectedTrain.CurrentOccupancy += request.Passengers.Count;
+
                 Console.WriteLine($"Updated occupancy for {selectedTrain.Name}: {selectedTrain.CurrentOccupancy}/{selectedTrain.Capacity}");
             }
             // If there is no trains available for this case
             else
             {
                 Console.WriteLine("\nNo train available to accommodate all passengers together.");
+                response.isBooked = false;
             }
         }
         else // If the passengers are not conditioned to be assigned to the same train
         {
             Console.WriteLine("\nAttempting to assign passengers to different trains...");
             // Assign passengers individually to any trains that have space and under 70% full
-            foreach (var p in request.Passengers)
+            for (var i = 0; i < request.PassengerCount; i++)
             {
-                Console.WriteLine($"\nTrying to assign {p.Name}...");
+                Console.WriteLine($"\nTrying to assign passenger {i + 1}...");
                 var availableTrains = _trains.FindAll(t =>
                 {
                     var occupancyRatio = (double)t.CurrentOccupancy / t.Capacity;
@@ -82,29 +104,26 @@ public class BookingService
                     return occupancyRatio < 0.7 && hasSpace;
                 });
 
-                if (availableTrains != null)
+                if (availableTrains != null && availableTrains.Count > 0)
                 {
                     var selectedTrain = GetTrainWithLargestOccupancyRatio(availableTrains);
-                    p.TrainId = selectedTrain.Id;
-                    selectedTrain.CurrentOccupancy += 1;
-
-                    Console.WriteLine($"Assigned {p.Name} to {selectedTrain.Name}");
-                    Console.WriteLine($"Updated occupancy for {selectedTrain.Name}: {selectedTrain.CurrentOccupancy}/{selectedTrain.Capacity}");
+                    if (selectedTrain != null)
+                    {
+                        selectedTrain.CurrentOccupancy += 1;
+                        response.Trains.Add(selectedTrain);
+                        Console.WriteLine($"Assigned passenger {i + 1} to {selectedTrain.Name}");
+                        Console.WriteLine($"Updated occupancy for {selectedTrain.Name}: {selectedTrain.CurrentOccupancy}/{selectedTrain.Capacity}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"No available train for passenger {p.Name}.");
+                    response.isBooked = false;
+                    Console.WriteLine($"No available train for passenger {i + 1}.");
                 }
             }
         }
 
-        Console.WriteLine("\nFinal booking result:");
-        foreach (var p in request.Passengers)
-        {
-            Console.WriteLine(p);
-        }
-
-        return request;
+        return response;
     }
     // Method to get the train with the largest occupancy ratio(optional)
     private Train GetTrainWithLargestOccupancyRatio(List<Train> availableTrains)

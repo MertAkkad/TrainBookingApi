@@ -1,14 +1,30 @@
 {
     "IsSame": true,
-    "Passengers": [
+    "PassengerCount": 10,
+    "trains": [
         {
-            "Name": "Alice"
+            "Id": 1,
+            "Name": "Train A",
+            "Capacity": 150,
+            "CurrentOccupancy": 60
         },
         {
-            "Name": "Bob"
+            "Id": 2,
+            "Name": "Train A",
+            "Capacity": 150,
+            "CurrentOccupancy": 60
         },
         {
-            "Name": "Charlie"
+            "Id": 3,
+            "Name": "Train B",
+            "Capacity": 100,
+            "CurrentOccupancy": 60
+        },
+        {
+            "Id": 4,
+            "Name": "Train C",
+            "Capacity": 120,
+            "CurrentOccupancy": 90
         }
     ]
 }
